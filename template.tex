@@ -89,20 +89,38 @@
 \begin{question}{Problem 3}
 According to the description, without considering the initial phase, the time domain response of the system can be written as:
 \begin{align*}
-    h(t) &= e^{-\alpha t}cos(\omega t) \\
+    h(t) &= e^{-\alpha t}cos(\omega_{n} t) \\
     &= e^{-\alpha t}cos(2 \pi f t) \\
     &= e^{-\frac{1}{600}t}cos(20 \pi t)
 \end{align*}
-Using Laplace transform, the frequency transfer function is
-\begin{equation}
-    H(s) = \frac{s + \frac{1}{600}}{(s+\frac{1}{600})^2 + (20\pi)^2} = \frac{s + \frac{1}{600}}{s^2 + \frac{1}{300}s + (\frac{1}{36000}+400\pi^2)}
+So the natural frequency $\omega_{n} = 2\pi f_{n}= 20\pi$, the attenuation rate $\alpha = \frac{1}{600}$.
+The Q factor is defined as the natural frequency over the bandwidth:
+\begin{equation}\label{eq1}
+    Q = \frac{f_{n}}{\Delta f}
 \end{equation}
-Using MATLAB, we can have the bode plot for its frequency response:
-\begin{figure}[ht]
+Also, Q can be defined use damping ratio $\zeta = \frac{\alpha}{\omega_{n}}$:
+\begin{equation}\label{eq2}
+    Q = \frac{1}{2\zeta} = \frac{\omega_{n}}{2\alpha} = \frac{2\pi f_{n}}{2\alpha} = \frac{\pi f_{n}}{\alpha}
+\end{equation}
+Combine Equation \ref{eq1} and \ref{eq2} together, we can have
+\begin{equation}
+    \Delta f = \frac{\alpha}{\pi} = 5.3052 \times 10^{-4} Hz
+\end{equation}
+
+The $\Delta f$ is $5.3052 \times 10^{-4} Hz$. The frequency spectrum is centered at the natural frequency of the system, $10 Hz$.
+
+Using Laplace transform, the frequency transfer function is
+\begin{equation*}
+    H(s) = \frac{s + \frac{1}{600}}{(s+\frac{1}{600})^2 + (20\pi)^2} = \frac{s + \frac{1}{600}}{s^2 + \frac{1}{300}s + (\frac{1}{36000}+400\pi^2)}
+\end{equation*}
+Using MATLAB, we can have the bode plot for its frequency response in Figure. \ref{fig1}:
+\begin{figure}[h]
     \includegraphics[width=12cm]{p3.eps}
     \centering
+    \caption{Figure 1: Frequency response in Problem 3}
+    \label{fig1}
 \end{figure}
-We can see the effect of the damping to the system, but based on the definition of cutoff frequencies, the frequency spectrum of this system can still consider as a line spectrum at 10 Hz. 
+We can see the effect of the damping to the system, but since the bandwidth is too small to see, the frequency spectrum of this system can still consider as a line spectrum at 10 Hz, but with a $5.3052 \times 10^{-4} Hz$ bandwidth. 
 \end{question}
 
 \begin{question}{Problem 4}
@@ -132,14 +150,14 @@ The RMS voltage noise is $1.8 \times 10^{-6}$ V $= 1.8 \times 10^{-3}$ mV.
 \begin{question}{Problem 7}
 For the least-significant fluctuation of a 10-bits ADC/5V system, the amplitude is:
 \begin{equation*}
-    V_{1-bit} = \frac{5}{1023} \approx 4.9 \times 10^{-3} V
+    V_{1-bit} = \frac{5}{1024} \approx 4.9 \times 10^{-3} V
 \end{equation*}
 We know that for an RC circuit $\omega = 2\pi\Delta f = \frac{1}{RC}$, so $\Delta f = \frac{1}{2\pi RC}$. For the Johnson noise of the resistor in the RC circuit, we have
 \begin{align*}
     &V_{noise} = \sqrt{4kTR\Delta f} \\
     \Longrightarrow& T = \frac{V_{noise}^2}{4kR\Delta f} = \frac{V_{noise}^2}{4kR \frac{1}{2\pi RC}} = \frac{\pi V_{noise}^2 C}{2k}
 \end{align*}
-In this problem, $V_{noise} = V_{1-bit}$, so $T = \frac{\pi V_{1-bit}^2 C}{2k} =\frac{3.14 \times (4.9 \times 10^{-3} V)^2 \times 100 \times 10^{-12} F}{2 \times 1.38064852 \times 10^{-23} \frac{m^2 kg}{s^2 k}} \approx 27.3 \times 10^{7} K$. The temperature is impossible to achieve under normal conditions. It means that the Johnson noise of the resistor under normal condition cannot be picked up by the Arduino system.
+In this problem, $V_{noise} = V_{1-bit}$, so $T = \frac{\pi V_{1-bit}^2 C}{2k} =\frac{3.14 \times (4.9 \times 10^{-3} V)^2 \times 100 \times 10^{-12} F}{2 \times 1.38064852 \times 10^{-23} \frac{m^2 kg}{s^2 k}} \approx 2.73 \times 10^{8} K$. The temperature is impossible to achieve under normal conditions. It means that the Johnson noise of the resistor under normal condition cannot be picked up by the Arduino system.
 \end{question}
 
 \begin{question}{Problem 8}
